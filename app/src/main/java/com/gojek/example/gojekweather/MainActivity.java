@@ -1,14 +1,15 @@
 package com.gojek.example.gojekweather;
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.gojek.example.gojekweather.databinding.ActivityMainBinding;
-import com.gojek.example.gojekweather.events.FutureForecastEvent;
 import com.gojek.example.gojekweather.events.WeatherEvents;
 import com.gojek.example.gojekweather.network.pojos.Forecast;
 import com.gojek.example.gojekweather.network.pojos.Weather;
@@ -21,6 +22,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends AppCompatActivity implements WeatherScreen {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     ActivityMainBinding dataBinding;
 
     WeatherActivityViewModel weatherActivityViewModel;
@@ -37,7 +39,13 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
         weatherActivityViewModel = new WeatherActivityViewModel();
         weatherActivityViewModel.loadWeatherForcast();
 
-        refresh();
+        dataBinding.layoutError.btnRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                weatherActivityViewModel.loadWeatherForcast();
+            }
+        });
+
     }
 
     @Override
@@ -53,22 +61,6 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onFutureForecastEvent(FutureForecastEvent futureForecastEvent){
-        weatherActivityViewModel.setShowLoading(false);
-
-        if (futureForecastEvent.isSUCCESS() && futureForecastEvent.getFutureForecast()!=null){
-            showTodaysWeather(futureForecastEvent.getFutureForecast().getCurrent());
-            showFutureForecast(futureForecastEvent.getFutureForecast().getForecast());
-
-            weatherActivityViewModel.setShowNetworkError(false);
-        }else {
-            weatherActivityViewModel.setShowNetworkError(true);
-        }
-
-        refresh();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onWeatherEvents(WeatherEvents weatherEvents){
         if (weatherEvents!=null){
             switch (weatherEvents.getAction()){
@@ -76,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
                     refresh();
                     break;
                 case SHOW_FORECAST:
+                    showTodaysWeather(weatherEvents.getFutureForecast().getCurrent());
+                    showFutureForecast(weatherEvents.getFutureForecast().getForecast());
+                    refresh();
                     break;
             }
         }
@@ -110,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
     @Override
     public void refresh() {
         if (weatherActivityViewModel!=null){
+            Log.d(TAG, "refresh: "+weatherActivityViewModel.toString());
             dataBinding.setViewModel(weatherActivityViewModel);
 
             if (weatherActivityViewModel.isShowLoading()){

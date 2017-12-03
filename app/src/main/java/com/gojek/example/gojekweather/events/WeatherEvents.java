@@ -1,5 +1,7 @@
 package com.gojek.example.gojekweather.events;
 
+import com.gojek.example.gojekweather.network.pojos.response.FutureForecast;
+
 /**
  * Created by vivek on 03/12/17.
  */
@@ -11,13 +13,24 @@ public class WeatherEvents {
         SHOW_FORECAST
     }
 
+    private FutureForecast futureForecast;
+
     private Action action;
 
     public WeatherEvents(Action action) {
         this.action = action;
     }
 
+    public WeatherEvents(Action action, FutureForecast futureForecast) {
+        this.action = action;
+        this.futureForecast = futureForecast;
+    }
+
     public Action getAction() {
         return action;
+    }
+
+    public FutureForecast getFutureForecast() {
+        return futureForecast;
     }
 }
