@@ -22,27 +22,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="24dp"
-            android:paddingBottom="32dp">
+            android:paddingBottom="24dp">
 
             <TextView
                 android:id="@+id/txt_day_forcast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/txt_day_forcast_temp"
-                android:textSize="16sp"
-                android:textColor="#2a2a2a"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/img_day_condition"
+                android:layout_toStartOf="@+id/img_day_condition"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="@dimen/day"
+                android:textColor="@color/day"
+                android:fontFamily="@font/roboto_regular"
                 tools:text="Monday"
                 android:text="@{forecast.dateAsDay}"/>
+
+            <ImageView
+                android:id="@+id/img_day_condition"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                tools:src="@drawable/ic_launcher_background"
+                android:layout_toLeftOf="@+id/txt_day_forcast_temp"
+                android:layout_toStartOf="@+id/txt_day_forcast_temp"/>
 
             <TextView
                 android:id="@+id/txt_day_forcast_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:textSize="16sp"
-                android:textColor="#2a2a2a"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/day_temp"
+                android:textColor="@color/day_temp"
                 android:textAllCaps="true"
+                android:fontFamily="@font/roboto_regular"
                 tools:text="20 C"
                 android:text="@{forecast.day.avgtempCAsString}"/>
 

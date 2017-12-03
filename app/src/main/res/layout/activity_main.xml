@@ -39,23 +39,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="56dp"
-                android:textSize="96sp"
-                android:textColor="#2a2a2a"
+                android:textSize="@dimen/main_temp"
+                android:textColor="@color/day_temp"
                 android:gravity="center"
                 tools:text="20°"
+                android:fontFamily="@font/roboto_black"
                 android:text="@{viewModel.futureForecast.current.tempCString}"/>
 
             <TextView
                 android:id="@+id/txt_current_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/txt_current_temp"
-                android:textSize="36sp"
-                android:textColor="#556799"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/roboto_thin"
                 android:gravity="center"
-                tools:text="Bangalore"
-                android:text="@{viewModel.futureForecast.location.name}"/>
+                android:text="@{viewModel.futureForecast.location.name}"
+                android:textColor="@color/city_name"
+                android:textSize="@dimen/city_name"
+                tools:text="Bangalore" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_future"

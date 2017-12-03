@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -11,6 +12,7 @@ import com.gojek.example.gojekweather.R;
 import com.gojek.example.gojekweather.databinding.LayoutItemDayForecastBinding;
 import com.gojek.example.gojekweather.network.pojos.Forecastday;
 import com.gojek.example.gojekweather.utils.DataBindingViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,6 +51,12 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
     public void onBindViewHolder(WeatherForecastViewHolder holder, int position) {
         Forecastday forecastday = forecastdays.get(position);
         holder.dataBinding.setForecast(forecastday);
+
+        if (!TextUtils.isEmpty(forecastday.getDay().getCondition().getIcon())){
+            Picasso.with(context).load("https:"+forecastday.getDay().getCondition().getIcon())
+                    .into(holder.dataBinding.imgDayCondition);
+        }
+
     }
 
     @Override
