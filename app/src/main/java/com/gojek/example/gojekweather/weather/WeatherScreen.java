@@ -13,6 +13,9 @@ public interface WeatherScreen {
     void showFutureForecast(Forecast forecast);
     void showToast(String msg);
 
+    void startLoadingAnimation();
+    void stoptLoadingAnimation();
+
     void refresh();
 
 }

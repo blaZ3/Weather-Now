@@ -3,10 +3,13 @@ package com.gojek.example.gojekweather;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.gojek.example.gojekweather.databinding.ActivityMainBinding;
 import com.gojek.example.gojekweather.events.FutureForecastEvent;
+import com.gojek.example.gojekweather.events.WeatherEvents;
 import com.gojek.example.gojekweather.network.pojos.Forecast;
 import com.gojek.example.gojekweather.network.pojos.Weather;
 import com.gojek.example.gojekweather.weather.WeatherActivityViewModel;
@@ -22,14 +25,19 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
 
     WeatherActivityViewModel weatherActivityViewModel;
 
+    Animation loadingAnimation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        weatherActivityViewModel = new WeatherActivityViewModel();
-        refresh();
+        loadingAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
 
+        weatherActivityViewModel = new WeatherActivityViewModel();
+        weatherActivityViewModel.loadWeatherForcast();
+
+        refresh();
     }
 
     @Override
@@ -60,6 +68,19 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
         refresh();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWeatherEvents(WeatherEvents weatherEvents){
+        if (weatherEvents!=null){
+            switch (weatherEvents.getAction()){
+                case REFRESH:
+                    refresh();
+                    break;
+                case SHOW_FORECAST:
+                    break;
+            }
+        }
+    }
+
     @Override
     public void showTodaysWeather(Weather current) {
 
@@ -76,9 +97,27 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
     }
 
     @Override
+    public void startLoadingAnimation() {
+        dataBinding.layoutLoading.imgLoading.startAnimation(loadingAnimation);
+    }
+
+    @Override
+    public void stoptLoadingAnimation() {
+        loadingAnimation.cancel();
+        loadingAnimation.reset();
+    }
+
+    @Override
     public void refresh() {
         if (weatherActivityViewModel!=null){
-            dataBinding.setData(weatherActivityViewModel);
+            dataBinding.setViewModel(weatherActivityViewModel);
+
+            if (weatherActivityViewModel.isShowLoading()){
+                startLoadingAnimation();
+            }else {
+                stoptLoadingAnimation();
+            }
+
         }else {
             showToast("Some error occurred!");
         }

@@ -2,8 +2,9 @@
 <layout>
 
     <data>
+        <import type="android.view.View"/>
         <variable
-            name="data"
+            name="viewModel"
             type="com.gojek.example.gojekweather.weather.WeatherActivityViewModel"/>
     </data>
 
@@ -13,8 +14,18 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         tools:context="com.gojek.example.gojekweather.MainActivity">
 
+        <include
+            android:id="@+id/layout_loading"
+            layout="@layout/layout_loading"
+            app:viewModel="@{viewModel}"/>
+
+        <include
+            android:id="@+id/layout_error"
+            layout="@layout/layout_error"
+            app:viewModel="@{viewModel}"/>
 
 
     </RelativeLayout>

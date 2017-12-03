@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="sixteen_dp">16dp</dimen>
+
+    <dimen name="error_message_text_size">54sp</dimen>
+    <dimen name="retry_button_top_margin">44dp</dimen>
+
+</resources>

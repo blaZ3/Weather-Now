@@ -14,6 +14,7 @@ public class WeatherActivityViewModel {
 
     private boolean showLoading;
     private boolean showNetworkError;
+    private String errorMsg;
 
     private TodayForecast todayForecast;
     private FutureForecast futureForecast;
@@ -22,12 +23,16 @@ public class WeatherActivityViewModel {
         Log.d(TAG, "WeatherActivityViewModel() called");
         showLoading = true;
         showNetworkError = false;
+        errorMsg = "Something went wrong at our end";
     }
 
 
     public void loadWeatherForcast(){
-        setShowLoading(true);
-        setShowNetworkError(false);
+        setShowLoading(false);
+        setShowNetworkError(true);
+
+        //make api call
+
 
 
     }
@@ -47,6 +52,10 @@ public class WeatherActivityViewModel {
 
     public void setShowNetworkError(boolean showNetworkError) {
         this.showNetworkError = showNetworkError;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
     public TodayForecast getTodayForecast() {

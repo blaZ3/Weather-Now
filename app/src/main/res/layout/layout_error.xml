@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.gojek.example.gojekweather.weather.WeatherActivityViewModel"/>
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="@{viewModel.showNetworkError? View.VISIBLE : View.GONE}"
+        android:gravity="center"
+        android:background="@color/error_background"
+        android:orientation="vertical"
+        android:padding="@dimen/sixteen_dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/error_message_text_size"
+            android:gravity="center"
+            tools:text="Error text"
+            android:text="@{viewModel.errorMsg}"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/retry_button_top_margin"
+            android:text="Retry"
+            android:textColor="@color/white"
+            android:backgroundTint="#4a4a4a"/>
+
+    </LinearLayout>
+
+</layout>
