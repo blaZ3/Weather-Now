@@ -1,7 +1,6 @@
 package com.gojek.example.gojekweather.network;
 
 import com.gojek.example.gojekweather.network.pojos.response.FutureForecast;
-import com.gojek.example.gojekweather.network.pojos.response.TodayForecast;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.gojek.example.gojekweather.events.WeatherEvents;
 import com.gojek.example.gojekweather.network.pojos.response.FutureForecast;
-import com.gojek.example.gojekweather.network.pojos.response.TodayForecast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -19,7 +18,6 @@ public class WeatherActivityViewModel {
     private boolean showNetworkError;
     private String errorMsg;
 
-    private TodayForecast todayForecast;
     private FutureForecast futureForecast;
 
     private WeatherModel weatherModel;
@@ -97,10 +95,6 @@ public class WeatherActivityViewModel {
         return errorMsg;
     }
 
-    public TodayForecast getTodayForecast() {
-        return todayForecast;
-    }
-
     public void setFutureForecast(FutureForecast futureForecast) {
         this.futureForecast = futureForecast;
     }
@@ -122,7 +116,6 @@ public class WeatherActivityViewModel {
                 "showLoading=" + showLoading +
                 ", showNetworkError=" + showNetworkError +
                 ", errorMsg='" + errorMsg + '\'' +
-                ", todayForecast=" + todayForecast +
                 ", futureForecast=" + futureForecast +
                 ", weatherModel=" + weatherModel +
                 '}';

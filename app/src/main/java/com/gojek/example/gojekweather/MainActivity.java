@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.gojek.example.gojekweather.databinding.ActivityMainBinding;
 import com.gojek.example.gojekweather.events.WeatherEvents;
 import com.gojek.example.gojekweather.network.pojos.Forecast;
-import com.gojek.example.gojekweather.network.pojos.Weather;
 import com.gojek.example.gojekweather.weather.WeatherActivityViewModel;
 import com.gojek.example.gojekweather.weather.WeatherForecastAdapter;
 import com.gojek.example.gojekweather.weather.WeatherScreen;
@@ -66,10 +65,6 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void showTodaysWeather(Weather current) {
-
-    }
 
     @Override
     public void showFutureForecast(Forecast forecast) {
@@ -88,14 +83,12 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
                     refresh();
                     break;
                 case SHOW_FORECAST:
-                    showTodaysWeather(weatherEvents.getFutureForecast().getCurrent());
                     showFutureForecast(weatherEvents.getFutureForecast().getForecast());
                     refresh();
                     break;
             }
         }
     }
-
 
 
     @Override
