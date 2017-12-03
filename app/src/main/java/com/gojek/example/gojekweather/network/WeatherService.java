@@ -17,6 +17,7 @@ public interface WeatherService {
     Call<TodayForecast> getTodaysForecast(@Query("key") String key, @Query("q") String city);
 
     @GET("forecast.json")
-    Call<FutureForecast> getFutureForecast(@Query("key") String key, @Query("q") String city);
+    Call<FutureForecast> getFutureForecast(@Query("key") String key, @Query("q") String city,
+                                           @Query("days") int days);
 
 }

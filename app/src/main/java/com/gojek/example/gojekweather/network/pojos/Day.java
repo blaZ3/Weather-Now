@@ -105,6 +105,16 @@ public class Day {
         return avgtempC;
     }
 
+    public String getAvgtempCAsString() {
+        try{
+            int temp = avgtempC.intValue();
+            return String.valueOf(temp + " C");
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return String.valueOf(avgtempC);
+        }
+    }
+
     public void setAvgtempC(Double avgtempC) {
         this.avgtempC = avgtempC;
     }

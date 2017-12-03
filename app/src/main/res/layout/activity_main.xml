@@ -58,16 +58,14 @@
                 android:text="@{viewModel.futureForecast.location.name}"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/layout_future"
+                android:id="@+id/recycler_future"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="88dp"
-                android:elevation="4dp"
-                android:layout_below="@+id/txt_current_city"
                 android:layout_alignParentBottom="true"
-                android:background="@color/colorAccent"
-                android:orientation="vertical"/>
-
+                android:layout_below="@+id/txt_current_city"
+                android:layout_marginTop="88dp"
+                android:orientation="vertical"
+                tools:listitem="@layout/layout_item_day_forecast" />
 
         </RelativeLayout>
 

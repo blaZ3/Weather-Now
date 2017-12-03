@@ -1,8 +1,12 @@
 package com.gojek.example.gojekweather.network.pojos;
 
+import android.text.format.DateFormat;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +36,18 @@ public class Forecastday {
     private List<Hour> hour = null;
 
     public String getDate() {
+        return date;
+    }
+
+    public String getDateAsDay() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            Date dateDt = format.parse(date);
+            String dayOfTheWeek = (String) DateFormat.format("EEEE", dateDt);
+            return dayOfTheWeek;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         return date;
     }
 

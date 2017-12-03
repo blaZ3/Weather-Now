@@ -8,5 +8,6 @@ public class AppConstants {
 
     public static final String API_KEY = "9697ec86c51d4feaa85175211170212";
     public static final String CITY = "Bangalore";
+    public static final int DAYS = 10;
 
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="forecast"
+            type="com.gojek.example.gojekweather.network.pojos.Forecastday"/>
+    </data>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="24dp"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:id="@+id/txt_day_forcast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/txt_day_forcast_temp"
+                android:textSize="16sp"
+                android:textColor="#2a2a2a"
+                tools:text="Monday"
+                android:text="@{forecast.dateAsDay}"/>
+
+            <TextView
+                android:id="@+id/txt_day_forcast_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textSize="16sp"
+                android:textColor="#2a2a2a"
+                android:textAllCaps="true"
+                tools:text="20 C"
+                android:text="@{forecast.day.avgtempCAsString}"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e2e2e2"/>
+
+    </LinearLayout>
+
+
+</layout>

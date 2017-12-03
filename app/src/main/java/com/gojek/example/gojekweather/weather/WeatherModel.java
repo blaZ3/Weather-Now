@@ -19,7 +19,7 @@ public class WeatherModel {
 
     public void getForecast(final WeatherActivityViewModel.WeatherActivityViewModelInterface callback){
         Call<FutureForecast> call = NetworkClient.getWeatherService()
-                .getFutureForecast(AppConstants.API_KEY, AppConstants.CITY);
+                .getFutureForecast(AppConstants.API_KEY, AppConstants.CITY, AppConstants.DAYS);
         call.enqueue(new Callback<FutureForecast>() {
             @Override
             public void onResponse(Call<FutureForecast> call, Response<FutureForecast> response) {

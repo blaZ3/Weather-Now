@@ -3,6 +3,7 @@ package com.gojek.example.gojekweather;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,6 +15,7 @@ import com.gojek.example.gojekweather.events.WeatherEvents;
 import com.gojek.example.gojekweather.network.pojos.Forecast;
 import com.gojek.example.gojekweather.network.pojos.Weather;
 import com.gojek.example.gojekweather.weather.WeatherActivityViewModel;
+import com.gojek.example.gojekweather.weather.WeatherForecastAdapter;
 import com.gojek.example.gojekweather.weather.WeatherScreen;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
     Animation loadingAnimation;
     Animation slideUpAnimation;
 
+    WeatherForecastAdapter weatherForecastAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
 
         weatherActivityViewModel = new WeatherActivityViewModel();
 
+        dataBinding.recyclerFuture.setLayoutManager(new LinearLayoutManager(this));
         dataBinding.layoutError.btnRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +66,19 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void showTodaysWeather(Weather current) {
+
+    }
+
+    @Override
+    public void showFutureForecast(Forecast forecast) {
+        weatherForecastAdapter = new WeatherForecastAdapter(MainActivity.this,
+                forecast.getForecastday());
+        dataBinding.recyclerFuture.setAdapter(weatherForecastAdapter);
+        dataBinding.recyclerFuture.startAnimation(slideUpAnimation);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onWeatherEvents(WeatherEvents weatherEvents){
         Log.d(TAG, "onWeatherEvents() called with: weatherEvents = [" + weatherEvents + "]");
@@ -78,15 +96,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
         }
     }
 
-    @Override
-    public void showTodaysWeather(Weather current) {
 
-    }
-
-    @Override
-    public void showFutureForecast(Forecast forecast) {
-        dataBinding.layoutFuture.startAnimation(slideUpAnimation);
-    }
 
     @Override
     public void showToast(String msg) {
@@ -109,13 +119,11 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
         if (weatherActivityViewModel!=null){
             Log.d(TAG, "refresh: "+weatherActivityViewModel.toString());
             dataBinding.setViewModel(weatherActivityViewModel);
-
             if (weatherActivityViewModel.isShowLoading()){
                 startLoadingAnimation();
             }else {
                 stoptLoadingAnimation();
             }
-
         }else {
             showToast("Some error occurred!");
         }
