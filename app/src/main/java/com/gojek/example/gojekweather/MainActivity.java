@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
     WeatherActivityViewModel weatherActivityViewModel;
 
     Animation loadingAnimation;
+    Animation slideUpAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,9 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         loadingAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
 
         weatherActivityViewModel = new WeatherActivityViewModel();
-        weatherActivityViewModel.loadWeatherForcast();
 
         dataBinding.layoutError.btnRetry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +46,13 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
                 weatherActivityViewModel.loadWeatherForcast();
             }
         });
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        weatherActivityViewModel.loadWeatherForcast();
     }
 
     @Override
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onWeatherEvents(WeatherEvents weatherEvents){
+        Log.d(TAG, "onWeatherEvents() called with: weatherEvents = [" + weatherEvents + "]");
         if (weatherEvents!=null){
             switch (weatherEvents.getAction()){
                 case REFRESH:
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
 
     @Override
     public void showFutureForecast(Forecast forecast) {
-
+        dataBinding.layoutFuture.startAnimation(slideUpAnimation);
     }
 
     @Override

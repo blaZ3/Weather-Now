@@ -109,6 +109,18 @@ public class Weather {
         return tempC;
     }
 
+    public String getTempCString() {
+        try{
+            int temp = tempC.intValue();
+            return String.valueOf(temp + "\u00B0");
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return String.valueOf(tempC);
+        }
+    }
+
+
+
     public void setTempC(Double tempC) {
         this.tempC = tempC;
     }

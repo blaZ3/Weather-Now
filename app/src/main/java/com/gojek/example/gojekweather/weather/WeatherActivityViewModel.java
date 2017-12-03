@@ -35,6 +35,7 @@ public class WeatherActivityViewModel {
 
 
     public void loadWeatherForcast(){
+        Log.d(TAG, "loadWeatherForcast() called");
         setShowLoading(true);
         setShowNetworkError(false);
 
@@ -44,6 +45,8 @@ public class WeatherActivityViewModel {
             public void gotData(FutureForecast futureForecast) {
                 setShowLoading(false);
                 setShowNetworkError(false);
+
+                setFutureForecast(futureForecast);
 
                 EventBus.getDefault().post(new WeatherEvents(WeatherEvents.Action.SHOW_FORECAST,
                         futureForecast));
@@ -86,12 +89,20 @@ public class WeatherActivityViewModel {
         this.showNetworkError = showNetworkError;
     }
 
+    public boolean isShowWeather() {
+        return !showLoading && !showNetworkError;
+    }
+
     public String getErrorMsg() {
         return errorMsg;
     }
 
     public TodayForecast getTodayForecast() {
         return todayForecast;
+    }
+
+    public void setFutureForecast(FutureForecast futureForecast) {
+        this.futureForecast = futureForecast;
     }
 
     public FutureForecast getFutureForecast() {
