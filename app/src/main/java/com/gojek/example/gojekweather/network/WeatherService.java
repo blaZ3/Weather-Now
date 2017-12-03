@@ -12,9 +12,6 @@ import retrofit2.http.Query;
 
 public interface WeatherService {
 
-    @GET("current.json")
-    Call<TodayForecast> getTodaysForecast(@Query("key") String key, @Query("q") String city);
-
     @GET("forecast.json")
     Call<FutureForecast> getFutureForecast(@Query("key") String key, @Query("q") String city,
                                            @Query("days") int days);
