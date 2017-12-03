@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.gojek.example.gojekweather.databinding.ActivityMainBinding;
 import com.gojek.example.gojekweather.events.WeatherEvents;
 import com.gojek.example.gojekweather.network.pojos.Forecast;
+import com.gojek.example.gojekweather.utils.Logger;
 import com.gojek.example.gojekweather.weather.WeatherActivityViewModel;
 import com.gojek.example.gojekweather.weather.WeatherForecastAdapter;
 import com.gojek.example.gojekweather.weather.WeatherScreen;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
         loadingAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
         slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
 
-        weatherActivityViewModel = new WeatherActivityViewModel();
+        weatherActivityViewModel = new WeatherActivityViewModel(new Logger());
 
         dataBinding.recyclerFuture.setLayoutManager(new LinearLayoutManager(this));
         dataBinding.layoutError.btnRetry.setOnClickListener(new View.OnClickListener() {

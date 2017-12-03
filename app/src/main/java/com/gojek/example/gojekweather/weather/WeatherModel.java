@@ -1,10 +1,9 @@
 package com.gojek.example.gojekweather.weather;
 
-import android.util.Log;
-
 import com.gojek.example.gojekweather.AppConstants;
-import com.gojek.example.gojekweather.network.NetworkClient;
+import com.gojek.example.gojekweather.network.WeatherService;
 import com.gojek.example.gojekweather.network.pojos.response.FutureForecast;
+import com.gojek.example.gojekweather.utils.ILogger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,13 +16,22 @@ import retrofit2.Response;
 public class WeatherModel {
     private static final String TAG = WeatherModel.class.getSimpleName();
 
+    ILogger logger;
+    WeatherService weatherService;
+    public WeatherModel(ILogger iLogger, WeatherService weatherService) {
+        this.logger = iLogger;
+        this.weatherService = weatherService;
+    }
+
     public void getForecast(final WeatherActivityViewModel.WeatherActivityViewModelInterface callback){
-        Call<FutureForecast> call = NetworkClient.getWeatherService()
-                .getFutureForecast(AppConstants.API_KEY, AppConstants.CITY, AppConstants.DAYS);
+//        Call<FutureForecast> call = NetworkClient.getWeatherService()
+//                .getFutureForecast(AppConstants.API_KEY, AppConstants.CITY, AppConstants.DAYS);
+        Call<FutureForecast> call = weatherService.getFutureForecast(
+                AppConstants.API_KEY, AppConstants.CITY, AppConstants.DAYS);
         call.enqueue(new Callback<FutureForecast>() {
             @Override
             public void onResponse(Call<FutureForecast> call, Response<FutureForecast> response) {
-                Log.d(TAG, "onResponse() called with: call = [" + call + "], response = [" + response + "]");
+                logger.d(TAG, "onResponse() called with: call = [" + call + "], response = [" + response + "]");
                 if (response.isSuccessful()){
                     callback.gotData(response.body());
                 }else {
@@ -32,12 +40,13 @@ public class WeatherModel {
             }
             @Override
             public void onFailure(Call<FutureForecast> call, Throwable t) {
-                Log.d(TAG, "onFailure() called with: call = [" + call + "], t = [" + t + "]");
+                logger.d(TAG, "onFailure() called with: call = [" + call + "], t = [" + t + "]");
                 callback.networkError();
             }
         });
     }
 
-
-
+    public void setWeatherService(WeatherService weatherService) {
+        this.weatherService = weatherService;
+    }
 }

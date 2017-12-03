@@ -1,9 +1,9 @@
 package com.gojek.example.gojekweather.weather;
 
-import android.util.Log;
-
 import com.gojek.example.gojekweather.events.WeatherEvents;
+import com.gojek.example.gojekweather.network.NetworkClient;
 import com.gojek.example.gojekweather.network.pojos.response.FutureForecast;
+import com.gojek.example.gojekweather.utils.ILogger;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -22,18 +22,20 @@ public class WeatherActivityViewModel {
 
     private WeatherModel weatherModel;
 
-    public WeatherActivityViewModel() {
-        Log.d(TAG, "WeatherActivityViewModel() called");
+    ILogger logger;
+
+    public WeatherActivityViewModel(ILogger iLogger) {
         showLoading = true;
         showNetworkError = false;
         errorMsg = "Something went wrong at our end";
 
-        weatherModel = new WeatherModel();
+        logger = iLogger;
+
+        weatherModel = new WeatherModel(iLogger, NetworkClient.getWeatherService());
     }
 
-
     public void loadWeatherForcast(){
-        Log.d(TAG, "loadWeatherForcast() called");
+        logger.d(TAG, "loadWeatherForcast() called");
         setShowLoading(true);
         setShowNetworkError(false);
 
@@ -70,7 +72,6 @@ public class WeatherActivityViewModel {
         EventBus.getDefault().post(new WeatherEvents(WeatherEvents.Action.REFRESH));
     }
 
-
     public boolean isShowLoading() {
         return showLoading;
     }
@@ -99,10 +100,13 @@ public class WeatherActivityViewModel {
         this.futureForecast = futureForecast;
     }
 
+    public void setWeatherModel(WeatherModel weatherModel) {
+        this.weatherModel = weatherModel;
+    }
+
     public FutureForecast getFutureForecast() {
         return futureForecast;
     }
-
 
     public interface WeatherActivityViewModelInterface{
         void gotData(FutureForecast futureForecast);
