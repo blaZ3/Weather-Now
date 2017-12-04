@@ -16,13 +16,12 @@ import com.gojek.example.gojekweather.network.pojos.Forecast;
 import com.gojek.example.gojekweather.utils.Logger;
 import com.gojek.example.gojekweather.weather.WeatherActivityViewModel;
 import com.gojek.example.gojekweather.weather.WeatherForecastAdapter;
-import com.gojek.example.gojekweather.weather.WeatherScreen;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class MainActivity extends AppCompatActivity implements WeatherScreen {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     ActivityMainBinding dataBinding;
@@ -66,9 +65,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
         EventBus.getDefault().unregister(this);
     }
 
-
-    @Override
-    public void showFutureForecast(Forecast forecast) {
+    public void showForecast(Forecast forecast) {
         weatherForecastAdapter = new WeatherForecastAdapter(MainActivity.this,
                 forecast.getForecastday());
         dataBinding.recyclerFuture.setAdapter(weatherForecastAdapter);
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
                     refresh();
                     break;
                 case SHOW_FORECAST:
-                    showFutureForecast(weatherEvents.getFutureForecast().getForecast());
+                    showForecast(weatherEvents.getFutureForecast().getForecast());
                     refresh();
                     break;
             }
@@ -92,23 +89,19 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
     }
 
 
-    @Override
     public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
     public void startLoadingAnimation() {
         dataBinding.layoutLoading.imgLoading.startAnimation(loadingAnimation);
     }
 
-    @Override
-    public void stoptLoadingAnimation() {
+    public void stopLoadingAnimation() {
         loadingAnimation.cancel();
         loadingAnimation.reset();
     }
 
-    @Override
     public void refresh() {
         if (weatherActivityViewModel!=null){
             Log.d(TAG, "refresh: "+weatherActivityViewModel.toString());
@@ -116,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements WeatherScreen {
             if (weatherActivityViewModel.isShowLoading()){
                 startLoadingAnimation();
             }else {
-                stoptLoadingAnimation();
+                stopLoadingAnimation();
             }
         }else {
             showToast("Some error occurred!");

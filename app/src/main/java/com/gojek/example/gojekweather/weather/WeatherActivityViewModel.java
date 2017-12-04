@@ -48,6 +48,7 @@ public class WeatherActivityViewModel {
 
                 setFutureForecast(futureForecast);
 
+                //raise the event to show the current and future forecasts
                 EventBus.getDefault().post(new WeatherEvents(WeatherEvents.Action.SHOW_FORECAST,
                         futureForecast));
             }
@@ -57,6 +58,8 @@ public class WeatherActivityViewModel {
                 setShowLoading(false);
                 setShowNetworkError(true);
                 errorMsg = "Something went wrong at our end";
+
+                //raise the event to refresh the UI
                 EventBus.getDefault().post(new WeatherEvents(WeatherEvents.Action.REFRESH));
             }
 
@@ -65,6 +68,8 @@ public class WeatherActivityViewModel {
                 setShowLoading(false);
                 setShowNetworkError(true);
                 errorMsg = "Network error! Please check your network";
+
+                //raise the event to refresh the UI
                 EventBus.getDefault().post(new WeatherEvents(WeatherEvents.Action.REFRESH));
             }
         });
