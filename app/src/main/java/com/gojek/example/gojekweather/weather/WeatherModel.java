@@ -24,15 +24,13 @@ public class WeatherModel {
     }
 
     public void getForecast(final WeatherActivityViewModel.WeatherActivityViewModelInterface callback){
-//        Call<FutureForecast> call = NetworkClient.getWeatherService()
-//                .getFutureForecast(AppConstants.API_KEY, AppConstants.CITY, AppConstants.DAYS);
         Call<FutureForecast> call = weatherService.getFutureForecast(
                 AppConstants.API_KEY, AppConstants.CITY, AppConstants.DAYS);
         call.enqueue(new Callback<FutureForecast>() {
             @Override
             public void onResponse(Call<FutureForecast> call, Response<FutureForecast> response) {
                 logger.d(TAG, "onResponse() called with: call = [" + call + "], response = [" + response + "]");
-                if (response.isSuccessful()){
+                if (response.isSuccessful() && response.errorBody() == null){
                     callback.gotData(response.body());
                 }else {
                     callback.error();

@@ -1,5 +1,7 @@
 package com.gojek.example.gojekweather.network;
 
+import com.gojek.example.gojekweather.AppConstants;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,7 +16,7 @@ public class NetworkClient {
     public static WeatherService getWeatherService(){
         if (service == null){
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.apixu.com/v1/")
+                    .baseUrl(AppConstants.ROOT)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 

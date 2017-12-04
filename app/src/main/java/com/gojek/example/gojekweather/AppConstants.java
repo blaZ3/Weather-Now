@@ -10,4 +10,5 @@ public class AppConstants {
     public static final String CITY = "Bangalore";
     public static final int DAYS = 10;
 
+    public static String ROOT = "https://api.apixu.com/v1/";
 }
