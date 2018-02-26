@@ -43,6 +43,7 @@
                 android:textSize="@dimen/main_temp"
                 android:textColor="@color/day_temp"
                 android:gravity="center"
+                android:layout_toLeftOf="@+id/recycler_future"
                 tools:text="20°"
                 android:fontFamily="@font/roboto_black"
                 android:text="@{viewModel.futureForecast.current.tempCString}"/>
@@ -54,6 +55,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/txt_current_temp"
+                android:layout_toLeftOf="@+id/recycler_future"
                 android:layout_marginTop="18dp"
                 android:fontFamily="@font/roboto_thin"
                 android:gravity="center"
@@ -64,11 +66,9 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_future"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/txt_current_city"
-                android:layout_marginTop="88dp"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
                 android:orientation="vertical"
                 tools:listitem="@layout/layout_item_day_forecast" />
 
