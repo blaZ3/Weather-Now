@@ -1,5 +1,6 @@
 package com.gojek.example.gojekweather;
 
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     Animation loadingAnimation;
     Animation slideUpAnimation;
+    Animation slideLeftAnimation;
 
     WeatherForecastAdapter weatherForecastAdapter;
 
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadingAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
         slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        slideLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_left);
 
         weatherActivityViewModel = new WeatherActivityViewModel(new Logger());
 
@@ -69,7 +72,12 @@ public class MainActivity extends AppCompatActivity {
         weatherForecastAdapter = new WeatherForecastAdapter(MainActivity.this,
                 forecast.getForecastday());
         dataBinding.recyclerFuture.setAdapter(weatherForecastAdapter);
-        dataBinding.recyclerFuture.startAnimation(slideUpAnimation);
+
+        if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+            dataBinding.recyclerFuture.startAnimation(slideUpAnimation);
+        }else {
+            dataBinding.recyclerFuture.startAnimation(slideLeftAnimation);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
