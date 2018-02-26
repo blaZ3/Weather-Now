@@ -5,7 +5,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.gojek.example.gojekweather.weather.WeatherActivityViewModel"/>
+            type="com.example.weathernow.weather.WeatherActivityViewModel"/>
     </data>
 
     <RelativeLayout
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        tools:context="com.gojek.example.gojekweather.MainActivity">
+        tools:context="com.example.weathernow.MainActivity">
 
         <include
             android:id="@+id/layout_loading"
